@@ -1,4 +1,5 @@
 # CC-Sweet
+Sweet is an UI lib for Computer Craft
 
 ## Lib
 
