@@ -80,4 +80,16 @@ local LightButton = app.newToggelButton(
     end
 )
 
+local LoadingBar = app.newLoadingBar(25,10)
+
+local AddButton = app.newButton(2,14,5,16, "Add", function ()
+    LoadingBar.Percentage = LoadingBar.Percentage + 1
+    LoadingBar.draw()
+end)
+
+local ResetButton = app.newButton(2,17,5,19, "Reset", function ()
+    LoadingBar.Percentage = 0
+    LoadingBar.draw()
+end)
+
 app.exec()

@@ -11,6 +11,7 @@ local sweet = {}
 
 function sweet.drawBorder(startX, startY, width, height, Colour, BackgroundColour)
     term.setTextColour(Colour)
+    term.setBackgroundColour(BackgroundColour)
 
     height  = height - startY
     width   = width  - startX
@@ -55,6 +56,10 @@ function sweet.drawBorder(startX, startY, width, height, Colour, BackgroundColou
             end
         end
     end
+end
+
+function sweet.round(numer)
+    return numer >= 0 and math.floor(numer + .5) or math.ceil(numer - .5)
 end
 
 function sweet.newApp()
@@ -129,6 +134,43 @@ function sweet.newApp()
 
         table.insert(app.Objects, ToggelButton)
         return ToggelButton
+    end
+
+    function app.newLoadingBar(startX, startY)
+        local LoadingBar    = {}
+        LoadingBar.Type     = "LoadingBar"
+
+        LoadingBar.startX   = startX
+        LoadingBar.startY   = startY
+        LoadingBar.Lenght   = 20
+
+        LoadingBar.Percentage = 0
+
+        function LoadingBar.draw()
+            term.setCursorPos(startX, startY)
+            term.setBackgroundColour(colors.lightGray)
+            term.setTextColour(colors.green)
+
+            local caledPercentage   = (LoadingBar.Lenght/100) * LoadingBar.Percentage
+            local count             = 0
+
+            for i = 1, LoadingBar.Lenght do
+                if count < math.floor(caledPercentage) then
+                    term.setBackgroundColour(colors.green)
+                    term.write(" ")
+                    term.setBackgroundColour(colors.lightGray)
+                elseif sweet.round(caledPercentage) > count then
+                    term.write("\149")
+                else
+                    term.write(" ")
+                end
+                count = count + 1
+            end
+
+        end
+
+        table.insert(app.Objects, LoadingBar)
+        return LoadingBar
     end
 
     function app.newScrollBox(startX, startY, items)
